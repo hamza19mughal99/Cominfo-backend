@@ -20,12 +20,6 @@ const GetIframes = asyncHandler(async (req, res) => {
 const RegisterIframe = asyncHandler(async (req, res) => {
 
     const { urlLink } = req.body;
-    // const iframeExist = await Iframe.findOne({ urlLink })
-
-    // if (iframeExist) {
-    //     res.status(404);
-    //     throw new Error('Iframe already exist')
-    // }
 
     try {
         const iframe = await Iframe.create({
@@ -47,4 +41,30 @@ const RegisterIframe = asyncHandler(async (req, res) => {
 
 })
 
-export { RegisterIframe, GetIframes }
+const DeleteIframe = asyncHandler(async (req, res) => {
+    const { id } = req.params;
+
+    try {
+        const deletedIframe = await Iframe.findByIdAndDelete(id);
+        if (deletedIframe) {
+            res.status(200).json({
+                message: 'Iframe deleted successfully',
+                deletedIframe: {
+                    _id: deletedIframe._id,
+                    urlLink: deletedIframe.urlLink,
+                },
+            });
+        } else {
+            res.status(404).json({
+                message: 'Iframe not found',
+            });
+        }
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({
+            message: 'Iframe deletion failed',
+        });
+    }
+});
+
+export { RegisterIframe, GetIframes, DeleteIframe }
