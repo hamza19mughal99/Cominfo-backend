@@ -4,7 +4,11 @@ const IframeSchema = new mongoose.Schema({
     urlLink: {
         type: String,
         required: true,
-    } 
+    },
+    image: {
+        type: String,
+        required: true,
+    },
 })
 
 const iframe = mongoose.model('iframe', IframeSchema);

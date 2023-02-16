@@ -5,8 +5,13 @@ import bodyParser from "body-parser";
 import candidateRoute from "./routes/candidateRoute.js";
 import cors from "cors";
 import handleError from './middlewares/handleError.js';
+import fileUpload from 'express-fileupload'; 
 
 const app = express();
+
+app.use(fileUpload({
+    useTempFiles: true
+}))
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
